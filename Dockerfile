@@ -22,7 +22,6 @@ RUN rm /etc/apache2/sites-enabled/000-default.conf
 RUN a2ensite default-ssl && \
     a2ensite idp.ssl.conf
 
-
 # Configure shibboleth sp
 
 RUN mkdir -p /etc/shibboleth/certs
@@ -44,6 +43,5 @@ RUN chmod u+x /usr/bin/startup.sh \
 # Expose ports, volumes and set command
 
 VOLUME ["/etc/apache2/certs", "/etc/shibboleth/certs/", "/var/log/apache2", "/var/log/shibboleth"]
-
 EXPOSE 80 443
 CMD ["/usr/bin/startup.sh"]
