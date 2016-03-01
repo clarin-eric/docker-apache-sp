@@ -1,5 +1,9 @@
 Based on docker.clarin.eu/base
 
+Packages:
+openssl
+apache2
+
 ports:
 
 * 80, http
@@ -21,3 +25,8 @@ make
 ```
 
 
+## Running
+
+```
+docker run -ti --rm -p 80:80 -p 443:443 docker.clarin.eu/apache2:1.0.0
+```

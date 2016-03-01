@@ -21,7 +21,7 @@ COPY apache/workers.properties etc/libapache2-mod-jk/workers.properties
 RUN rm /etc/apache2/sites-enabled/000-default.conf
 RUN a2ensite default-ssl && \
     a2ensite idp.ssl.conf
-RUN chmod u+x /usr/bin/run-apache
+
 
 # Configure shibboleth sp
 
@@ -36,14 +36,14 @@ RUN chmod u+x /usr/bin/download-metadata.sh
 # Configure supervisor
 
 COPY startup.sh /usr/bin/startup.sh
-RUN chmod u+x /usr/bin/startup.sh
 COPY supervisor/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY supervisor/run-apache /usr/bin/run-apache
+RUN chmod u+x /usr/bin/startup.sh \
+ && chmod u+x /usr/bin/run-apache
 
 # Expose ports, volumes and set command
 
 VOLUME ["/etc/apache2/certs", "/etc/shibboleth/certs/", "/var/log/apache2", "/var/log/shibboleth"]
 
 EXPOSE 80 443
-#CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
 CMD ["/usr/bin/startup.sh"]

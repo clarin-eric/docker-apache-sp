@@ -25,24 +25,24 @@ function prepare_certs {
     CERT=${5}
 
     if [ ! -e ${PATH}/${KEY} ]; then
-        echo "Generating new ${NAME} certificate in: ${PATH}"
-        mkdir -p ${PATH} && \
-        openssl req -config ${PATH}/${CONFIG} -new -x509 -days 365 -keyout ${PATH}/${KEY} -out ${PATH}/${KEY} && \
-        chmod 0700 ${PATH}/${CERT} && \
-        chmod 0700 ${PATH}/${KEY}
-        rc =$?
-        if [ rc -ne 0 ]; then
-            echo "Failed to generate certificate"
+        /bin/echo "Generating new ${NAME} certificate in: ${PATH}"
+        /bin/mkdir -p ${PATH} && \
+        /usr/bin/openssl req -config ${PATH}/${CONFIG} -new -x509 -days 365 -keyout ${PATH}/${KEY} -out ${PATH}/${CERT} >> /var/log/${NAME}_cert_generation.log 2>&1 && \
+        /bin/chmod 0700 ${PATH}/${CERT} && \
+        /bin/chmod 0700 ${PATH}/${KEY}
+        rc=$?
+        if [ ${rc} -ne 0 ]; then
+            /bin/echo "Failed to generate certificate"
             exit 1
         fi
     else
-        echo "Existing certificate found in: ${PATH}"
+        /bin/echo "Existing certificate found in: ${PATH}"
     fi
 }
 
-echo "** Preparing certificates"
+/bin/echo "** Preparing certificates"
 prepare_certs "Apache2" ${APACHE_CERT_PATH} ${APACHE_CERT_CONFIG_FILE} ${APACHE_CERT_KEY_FILE} ${APACHE_CERT_FILE}
 prepare_certs "Shibboleth" ${SHIBBOLETH_CERT_PATH} ${SHIBBOLETH_CERT_CONFIG_FILE} ${SHIBBOLETH_CERT_KEY_FILE} ${SHIBBOLETH_CERT_FILE}
 
-echo "** Starting supervisord"
+/bin/echo "** Starting supervisord"
 /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
