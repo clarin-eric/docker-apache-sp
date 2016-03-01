@@ -1,0 +1,7 @@
+#!/bin/sh
+
+#Apply all configuration updates
+sed -i "s/entityID=\"https:\/\/www.shibboleth.example\/sp\/shibboleth\"/entityID=\"https:\/\/$HOSTNAME\/sp\/shibboleth\"/g" /etc/shibboleth/shibboleth2.xml
+
+#Start apache
+/bin/bash -c "source /etc/apache2/envvars && exec /usr/sbin/apache2 -DFOREGROUND -E /var/log/apache2/startup-errors.log"
