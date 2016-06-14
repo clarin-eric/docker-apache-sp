@@ -2,7 +2,7 @@ FROM docker.clarin.eu/base:1.0.1
 MAINTAINER CLARIN System Operators "sysops@clarin.eu"
 
 RUN apt-get update -y && \
-    apt-get install -y openssl apache2 libapache2-mod-shib2 libapache2-mod-jk supervisor && \
+    apt-get install -y openssl=1.0.1t-1+deb8u2 apache2 libapache2-mod-shib2 libapache2-mod-jk supervisor && \
     a2enmod ssl && \
     a2enmod shib2 && \
     a2enmod jk && \	
