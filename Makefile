@@ -1,7 +1,6 @@
 VERSION="1.0.2"
 NAME="apache2"
 REPOSITORY="docker.clarin.eu"
-
 IMAGE_NAME="${REPOSITORY}/${NAME}:${VERSION}"
 
 all: build
