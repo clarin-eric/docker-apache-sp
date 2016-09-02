@@ -47,5 +47,9 @@ function prepare_certs {
 prepare_certs ${APACHE_NAME} ${APACHE_CERT_PATH} ${APACHE_CERT_CONFIG_FILE} ${APACHE_CERT_KEY_FILE} ${APACHE_CERT_FILE}
 prepare_certs ${SHIBBOLETH_NAME} ${SHIBBOLETH_CERT_PATH} ${SHIBBOLETH_CERT_CONFIG_FILE} ${SHIBBOLETH_CERT_KEY_FILE} ${SHIBBOLETH_CERT_FILE}
 
+# cleanup pid files of any old process before starting supervisord
+# prevents the stale pid syndrome: http://perfec.to/stalepid.html
+find /var/run/ -type f -name "*.pid" -exec rm -f {} \;
+
 /bin/echo "** Starting supervisord"
 /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
