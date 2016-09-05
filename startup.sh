@@ -49,7 +49,7 @@ prepare_certs ${SHIBBOLETH_NAME} ${SHIBBOLETH_CERT_PATH} ${SHIBBOLETH_CERT_CONFI
 
 # cleanup pid files of any old process before starting supervisord
 # prevents the stale pid syndrome: http://perfec.to/stalepid.html
-find /var/run/ -type f -name "*.pid" -exec rm -f {} \;
+/usr/bin/find /var/run/ -type f -name "*.pid" -exec /bin/rm -f {} \;
 
 /bin/echo "** Starting supervisord"
 /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
